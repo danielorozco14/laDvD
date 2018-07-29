@@ -10,26 +10,19 @@ namespace inventio_win{
         public MySqlConnection con;
         public long insert_id;
         //Aun falta poder agregarle los datos a la base
-        public Connection(string User, string Password) {
-            switch (User) {
-                case ("SuperUser"):
-                    Coneccion(User, Password);
-                    break;
-                //Cambiar para que el case lo haga por el usuario buscando en la base no por el dato quemado
-                case ("Admin"):
-                    Coneccion(User, Password);
-                    break;
-                case ("Vendedor"):
-                    Coneccion(User, Password);
-                    break;
-                //Register no es necesario cambiarlo porque va ser donde tiene que poder ingresar un nuevo usuario que solo va tener poderes basicos en la base
-                case ("Register"):
-                    Coneccion("Register", "");
-                    break;
-                default:
-                    MessageBox.Show("El usuario" + User + "No esta registrado");
-                    break;
-            } 
+        public Connection() {
+            try
+            {
+                MySqlConnectionStringBuilder b = new MySqlConnectionStringBuilder();
+                b.Server = "localhost";
+                b.UserID = "root";//usuario que tenes registrado en tu base de datos mysql, no vayas a ocupar xampp que no sirve
+                b.Password = "140799Daoo";//contrasenia que le pusiste a la base de datos de mysql
+                b.Database = "inventario";
+                con = new MySqlConnection(b.ToString());
+            }
+            catch (MySqlException me) {
+                MessageBox.Show(me.Message);
+            }
         }
 
         public void execute(String sql){
